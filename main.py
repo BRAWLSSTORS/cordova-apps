@@ -4,7 +4,7 @@ import zipfile
 import telebot
 from telebot import types
 
-# Токен вашего Telegram-бота (замените на ваш токен)
+# Токен вашего Telegram-бота (замените на ваш токен)п
 TOKEN = '7368730334:AAH9xUG8G_Ro8mvV_fDQxd5ddkwjxHnBoeg'
 
 # Инициализация бота
