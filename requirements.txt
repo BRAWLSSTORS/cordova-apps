@@ -1,2 +1,1 @@
 pytelegrambotapi
-pip install git+https://github.com/talpor/python-cordova.git
