@@ -1,1 +1,2 @@
-pytelegrambotapi
+pyTelegramBotAPI==4.12.0  # Версия может варьироваться, но желательно указать стабильную
+setuptools>=58.0.0
