@@ -1,13 +1,24 @@
 import telebot
-from cordova import CordovaApp
-import zipfile
 import os
+import zipfile
+import subprocess
+from cordova import CordovaApp
 
-bot = telebot.TeleBot("7368730334:AAH9xUG8G_Ro8mvV_fDQxd5ddkwjxHnBoeg")
+bot = telebot.TeleBot("YOUR_TOKEN")
+
+def install_cordova():
+    try:
+        subprocess.check_call(["pip", "install", "git+https://github.com/talpor/python-cordova.git"])
+    except subprocess.CalledProcessError:
+        return False
+    return True
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, "Отправьте .zip файл с вашим проектом.")
+    if install_cordova():
+        bot.send_message(message.chat.id, "Библиотека python-cordova установлена. Теперь отправьте .zip файл с вашим проектом.")
+    else:
+        bot.send_message(message.chat.id, "Не удалось установить библиотеку python-cordova.")
 
 @bot.message_handler(content_types=['document'])
 def handle_docs(message):
@@ -24,8 +35,12 @@ def handle_docs(message):
         app = CordovaApp("project_folder")
         app.build('android')
         
-        with open("project_folder/platforms/android/app/build/outputs/apk/debug/app-debug.apk", 'rb') as apk_file:
-            bot.send_document(message.chat.id, apk_file)
+        apk_path = "project_folder/platforms/android/app/build/outputs/apk/debug/app-debug.apk"
+        if os.path.exists(apk_path):
+            with open(apk_path, 'rb') as apk_file:
+                bot.send_document(message.chat.id, apk_file)
+        else:
+            bot.send_message(message.chat.id, "Ошибка сборки приложения.")
         
         os.remove("project.zip")
         os.rmdir("project_folder")
