@@ -4,7 +4,7 @@ import zipfile
 import subprocess
 from cordova import CordovaApp
 
-bot = telebot.TeleBot("YOUR_TOKEN")
+bot = telebot.TeleBot("7368730334:AAH9xUG8G_Ro8mvV_fDQxd5ddkwjxHnBoeg")
 
 def install_cordova():
     try:
